@@ -1,6 +1,7 @@
 import * as WebRequest from 'web-request'
 import * as jQuery from 'jquery'
 import * as cheerio from 'cheerio'
+import { url } from 'inspector';
 export default class RandomRecipeGenerator {
     private static readonly QUERY_REPLACE_STRING = "$searchQuery"
     private static readonly START_INDEX_REPLACE_STRING = "$start"
@@ -31,6 +32,7 @@ export default class RandomRecipeGenerator {
         const recipeCard = <RecipeCard>{
             title: cheerioLoaded('meta[property="og:title"]').attr('content'),
             imageUrl: cheerioLoaded('meta[property="og:image"]').attr('content'),
+            url: randomUri,
             ingredients: ingredientResponse.ingredients
         }
 
@@ -45,6 +47,7 @@ export default class RandomRecipeGenerator {
 interface RecipeCard {
     title: string
     imageUrl: string
+    url: string
     ingredients: Ingredient[]
 }
 
