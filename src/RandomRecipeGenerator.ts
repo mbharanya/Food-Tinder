@@ -14,10 +14,7 @@ export default class RandomRecipeGenerator {
         const searchQuery = RandomRecipeGenerator.API_URL.replace(RandomRecipeGenerator.QUERY_REPLACE_STRING, keyword).replace(RandomRecipeGenerator.START_INDEX_REPLACE_STRING, defaultStartIndex);
         const response = await WebRequest.get(searchQuery)
         const foobyResults = <FoobySearchResponse>JSON.parse(response.content)
-        const r = Math.random()
-        if(r == 1){
-            r = 0}
-        const randomIndex = Math.floor(r * (foobyResults.resultcounts.all+1))
+        const randomIndex = Math.floor(Math.random() * (foobyResults.resultcounts.all+1))
         console.debug(randomIndex)
 
         const randomResponse = await WebRequest.get(searchQuery.replace(defaultStartIndex, String(randomIndex)))
