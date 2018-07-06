@@ -13,7 +13,7 @@ function updateFromSearchValue() {
 let urls = []
 
 function updateRecipeUrls(keyword) {
-    $.get("recipe-urls/" + keyword, function (foundUrls) {
+    $.post("recipe-urls/", "keyword=" + keyword, function (foundUrls) {
         urls = foundUrls
         getNextRandomRecipe()
     })
