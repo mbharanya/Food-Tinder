@@ -1,21 +1,39 @@
-$("#search").on("keyup", function () {
-    getRecipe($(this).val())
+$("#searchButton").on("click", function () {
+    updateFromSearchValue()
 });
 
 $("#no").click(function () {
-    updateFromSearchValue();
+    getNextRandomRecipe()
 })
 
 function updateFromSearchValue() {
-    getRecipe($("#search").val());
+    updateRecipeUrls($("#search").val())
 }
 
-function getRecipe(keyword) {
-    $.get("random-recipe/" + keyword, function (recipeCard) {
+let urls = []
+
+function updateRecipeUrls(keyword) {
+    $.get("recipe-urls/" + keyword, function (foundUrls) {
+        urls = foundUrls
+        getNextRandomRecipe()
+    })
+}
+
+function getNextRandomRecipe() {
+    if (!urls.length) {
+        updateRecipeUrls()
+        return
+    }
+
+    const randomIndex = Math.floor(Math.random() * (urls.length + 1))
+
+    $.post("recipes/", "url=" + urls[randomIndex], function (recipeCard) {
         $('#title').html('<a href="' + recipeCard.url + '" target="_blank">' + recipeCard.title + '</a>')
         $('#recipe-image').attr("src", recipeCard.imageUrl)
         $('#ingredients').html(recipeCard.ingredients.map((i) => i.desc).join("<br>"))
+        $('#yes').wrap('<a href="' + recipeCard.url + '" target="_blank"></a>')
     })
+
 }
 
 updateFromSearchValue()

@@ -1,45 +1,45 @@
 import * as WebRequest from 'web-request'
-import * as jQuery from 'jquery'
 import * as cheerio from 'cheerio'
-import { url } from 'inspector';
-export default class RandomRecipeGenerator {
+import * as _ from 'lodash'
+
+export class FoobyDataProvider {
     private static readonly QUERY_REPLACE_STRING = "$searchQuery"
     private static readonly START_INDEX_REPLACE_STRING = "$start"
+    private static readonly NUM_REPLACE_STRING = "$num"
     private static readonly API_URL = "https://fooby.ch/hawaii_search.sri?query="
-        + RandomRecipeGenerator.QUERY_REPLACE_STRING + "&lang=de&treffertyp=rezepte&start="
-        + RandomRecipeGenerator.START_INDEX_REPLACE_STRING + "&num=1"
+        + FoobyDataProvider.QUERY_REPLACE_STRING + "&lang=de&treffertyp=rezepte&start="
+        + FoobyDataProvider.START_INDEX_REPLACE_STRING + "&num=" + FoobyDataProvider.NUM_REPLACE_STRING
 
-    async getRandomRecipeCard(keyword: string): Promise<any> {
-        const defaultStartIndex = "0";
-        const searchQuery = RandomRecipeGenerator.API_URL.replace(RandomRecipeGenerator.QUERY_REPLACE_STRING, keyword).replace(RandomRecipeGenerator.START_INDEX_REPLACE_STRING, defaultStartIndex);
+
+    private static readonly MAX_RESULTS = "10000";
+    private static readonly DEFAULT_START_INDEX = "0";
+
+    async getRecipeUrls(keyword: string) {
+        const searchQuery = FoobyDataProvider.API_URL
+            .replace(FoobyDataProvider.QUERY_REPLACE_STRING, keyword)
+            .replace(FoobyDataProvider.START_INDEX_REPLACE_STRING, FoobyDataProvider.DEFAULT_START_INDEX)
+            .replace(FoobyDataProvider.NUM_REPLACE_STRING, FoobyDataProvider.MAX_RESULTS);
+
         const response = await WebRequest.get(searchQuery)
         const foobyResults = <FoobySearchResponse>JSON.parse(response.content)
-        const randomIndex = Math.floor(Math.random() * foobyResults.resultcounts.all)
-        console.debug(randomIndex)
-
-        const randomResponse = await WebRequest.get(searchQuery.replace(defaultStartIndex, String(randomIndex)))
-        const foundRecipes = (<FoobySearchResponse>JSON.parse(randomResponse.content));
-        if (!foundRecipes.resultcounts.all){
+        if (!foobyResults.resultcounts.all) {
             return Promise.reject()
         }
-        const randomUri = foundRecipes.results.find(res => !!res.url).url
-        console.debug(randomUri)
 
-        const recipeSite = await WebRequest.get(randomUri)
+        return foobyResults.results.map(result => result.url)
+    }
+
+    async getRecipe(url: string): Promise<any> {
+        const recipeSite = await WebRequest.get(url)
 
         const cheerioLoaded = cheerio.load(recipeSite.content)
         const ingredientResponse = <IngredientResponse>cheerioLoaded('[data-portion-calculator-initial-all-ingredients]').data().portionCalculatorInitialAllIngredients
         const recipeCard = <RecipeCard>{
             title: cheerioLoaded('meta[property="og:title"]').attr('content'),
             imageUrl: cheerioLoaded('meta[property="og:image"]').attr('content'),
-            url: randomUri,
+            url: url,
             ingredients: ingredientResponse.ingredients
         }
-
-        console.log(recipeCard.title)
-        console.log(recipeCard.imageUrl)
-        console.log(recipeCard.ingredients.map(i => i.desc).join("\n"))
-
 
         return recipeCard
     }

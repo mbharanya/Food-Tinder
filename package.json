@@ -2,10 +2,10 @@
   "name": "food-tinder",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "build/App.js",
   "scripts": {
     "postinstall": "./node_modules/typescript/bin/tsc",
-    "start": "node build/RandomRecipeService.js"
+    "start": "node build/App.js"
   },
   "author": "",
   "license": "ISC",
@@ -13,6 +13,7 @@
     "babel-preset-env": "^1.7.0",
     "cheerio": "^1.0.0-rc.2",
     "jquery": "^3.3.1",
+    "lodash": "^4.17.10",
     "tsify": "^4.0.0",
     "typescript": "^2.9.2",
     "typescript-rest": "^1.6.1",
@@ -21,6 +22,7 @@
   "devDependencies": {
     "@types/cheerio": "^0.22.7",
     "@types/jquery": "^3.3.4",
+    "@types/lodash": "^4.14.110",
     "@types/node": "^10.3.4",
     "babel-cli": "^6.26.0",
     "browserify": "^16.2.2"
