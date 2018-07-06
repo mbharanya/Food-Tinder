@@ -30,7 +30,9 @@ function getNextRandomRecipe() {
     $.post("recipes/", "url=" + urls[randomIndex], function (recipeCard) {
         $('#title').html('<a href="' + recipeCard.url + '" target="_blank">' + recipeCard.title + '</a>')
         $('#recipe-image').attr("src", recipeCard.imageUrl)
-        $('#ingredients').html(recipeCard.ingredients.map((i) => i.desc).join("<br>"))
+        $('#ingredients').html(recipeCard.ingredients.map((i) =>
+            (i.quantity ? i.quantity + " " : "") + i.measure + " " + i.desc
+        ).join("<br>"))
         $('#yes').wrap('<a href="' + recipeCard.url + '" target="_blank"></a>')
     })
 
