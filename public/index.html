@@ -3,19 +3,41 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Food Tinder</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
 </head>
 
 <body>
-    <input type="search" id="search" placeholder="Search..." value="vegetarisch"><input id="searchButton" type="submit">
-    <div class="card">
-        <h2 id="title"></h2>
-        <img id="recipe-image" width="500px">
-        <div id="ingredients"></div>
-        <button id="yes">✅</button>
-        <button id="no">❌</button>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="input-group">
+                <input type="search" class="form-control" id="search" placeholder="Search..." value="vegetarisch">
+
+                <span class="input-group-btn">
+                    <button class="btn btn-default" id="searchButton" type="button">Search</button>
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="card">
+                <img class="card-img-top" id="recipe-image">
+                <div class="card-body">
+                    <h5 class="card-title" id="title"></h5>
+                    <p class="card-text" id="ingredients"></p>
+                    <div class="row">
+                        <div class="col-6">
+                                <button class="btn btn-block btn-light" id="yes">✅</button>
+                        </div>
+                        <div class="col-6">
+                                <button class="btn btn-block btn-light" id="no">❌</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="script.js"></script>
