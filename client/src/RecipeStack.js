@@ -21,7 +21,6 @@ class RecipeStack extends Component {
 
             console.log(recipeCards)
 
-
             return (
                 <div>
                     <div id="viewport">
@@ -33,9 +32,9 @@ class RecipeStack extends Component {
                             throwout={(e) => console.log('throwout', e)}
                         >
                             {recipeCards.map(
-                                (recipeCard, index) => {
-                                <RecipeCard recipeCard={recipeCard} />
-                            })}
+                                (recipeCard, index) =>
+                                    <RecipeCard recipeCard={recipeCard} topCard={index == 0 ? true : false} />
+                            )}
                         </Swing>
                     </div>
                 </div>

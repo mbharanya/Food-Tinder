@@ -14,7 +14,7 @@ class RecipeCard extends Component {
             return null
         }
         return (
-            <div className="card" key={recipeCard.url} throwout={(e) => console.log('card throwout', e)}>
+            <div className={"card"+ (this.props.topCard ? "" : " hidden-card")} key={recipeCard.url} throwout={(e) => console.log('card throwout', e)}>
                 <img className="card-img-top" id="recipe-image" src={recipeCard.imageUrl} />
                 <div className="card-body">
                     <a href={recipeCard.url} target="_blank">{recipeCard.title}<h3 className="card-title" id="title"></h3></a>
