@@ -10,7 +10,7 @@ class SearchBox extends Component {
     }
 
     state = {
-        query: '',
+        query: 'vegetarisch',
     }
 
     handleInputChange = () => {
@@ -44,7 +44,7 @@ class SearchBox extends Component {
                     placeholder="Search for..."
                     ref={input => this.search = input}
                     onChange={this.handleInputChange}
-                    defaultValue="vegetarisch"
+                    defaultValue={this.state.query}
                 />
                 <button type="button" onClick={this.getUrls}>Search</button>
             </form>

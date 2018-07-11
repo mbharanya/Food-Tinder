@@ -29,11 +29,11 @@ class RecipeStack extends Component {
                             tagName="div"
                             setStack={(stack) => this.setState({ stack: stack })}
                             ref="stack"
-                            throwout={(e) => console.log('throwout', e)}
+                            throwout={this.swipe}
                         >
                             {recipeCards.map(
                                 (recipeCard, index) =>
-                                    <RecipeCard recipeCard={recipeCard} topCard={index == 0 ? true : false} />
+                                    <RecipeCard recipeCard={recipeCard} topCard={index === 0 ? true : false} />
                             )}
                         </Swing>
                     </div>
@@ -68,6 +68,19 @@ class RecipeStack extends Component {
             nums.push(Math.floor(Math.random() * (maxValue + 1)))
         }
         return nums
+    }
+
+    swipe(e) {
+        switch (e.throwDirection.toString()) {
+            case Symbol.for("LEFT").toString():
+                console.log("nay")
+                break;
+            case Symbol.for("RIGHT").toString():
+                console.log("yay")
+                break;
+            default:
+                console.log(e)
+        }
     }
 }
 
