@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Axios from 'axios'
 import Swing, { Stack, Card, Direction } from 'react-swing'
+import ReactDOM from 'react-dom'
 import RecipeCard from './RecipeCard'
 
 class RecipeStack extends Component {
@@ -26,14 +27,15 @@ class RecipeStack extends Component {
                     <div id="viewport">
                         <Swing
                             className="stack"
-                            tagName="div"
                             setStack={(stack) => this.setState({ stack: stack })}
+                            // throwout={this.swipe}
                             ref="stack"
-                            throwout={this.swipe}
                         >
                             {recipeCards.map(
                                 (recipeCard, index) =>
-                                    <RecipeCard recipeCard={recipeCard} topCard={index === 0 ? true : false} />
+                                    <div key={index} throwout={this.swipe} ref={"card" + index}>
+                                        <RecipeCard recipeCard={recipeCard}/>
+                                    </div>
                             )}
                         </Swing>
                     </div>
@@ -71,11 +73,15 @@ class RecipeStack extends Component {
     }
 
     swipe(e) {
+        console.log(e)
+        const el = ReactDOM.findDOMNode(e.target)
         switch (e.throwDirection.toString()) {
             case Symbol.for("LEFT").toString():
                 console.log("nay")
+                el.className = el.className + " hidden-card"
                 break;
             case Symbol.for("RIGHT").toString():
+
                 console.log("yay")
                 break;
             default:

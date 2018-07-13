@@ -14,7 +14,7 @@ class RecipeCard extends Component {
             return null
         }
         return (
-            <div className={"card" + (this.props.topCard ? "" : " hidden-card")} key={recipeCard.url}>
+            <div className="card" key={recipeCard.url}>
                 <img className="card-img-top" src={recipeCard.imageUrl} />
                 <div className="card-body">
                     <a href={recipeCard.url} target="_blank">{recipeCard.title}<h3 className="card-title"></h3></a>
