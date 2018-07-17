@@ -23,7 +23,6 @@ class RecipeStack extends Component {
         }
     }
 
-
     render() {
         if (this.state.recipeCards.length) {
             const recipeCards = this.state.recipeCards
@@ -111,8 +110,7 @@ class RecipeStack extends Component {
                 self.shiftAndUnshift(self.state.urls[self.state.urlIndex])
                 break;
             case Symbol.for("RIGHT").toString():
-                window.open(self.state.urls[self.state.urlIndex])
-                console.log("yay")
+                window.open(self.state.recipeCards[self.state.recipeCards.length - 1].url)
                 break;
             default:
                 console.log(e)
