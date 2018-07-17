@@ -1,6 +1,5 @@
 import * as WebRequest from 'web-request'
 import * as cheerio from 'cheerio'
-import * as _ from 'lodash'
 
 export class FoobyDataProvider {
     private static readonly QUERY_REPLACE_STRING = "$searchQuery"
